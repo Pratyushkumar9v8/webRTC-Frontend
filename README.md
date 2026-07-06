@@ -1,73 +1,42 @@
-# React + TypeScript + Vite
+# WebRTC App - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend client for the WebRTC application. It provides the user interface for video conferencing, chat, and real-time collaboration.
 
-Currently, two official plugins are available:
+## Tech Stack
+- **React & Vite:** Fast and modern UI framework
+- **Tailwind CSS & Shadcn UI:** For styling and UI components
+- **Socket.io-client:** For real-time communication with the backend
+- **WebRTC API:** For peer-to-peer video and audio streaming
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Local Development Setup
 
-## React Compiler
+1. **Install Dependencies:**
+   ```bash
+   npm install
+   ```
+   *(Note: This project supports `pnpm`, `npm`, or `yarn`. Use your preferred package manager).*
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+2. **Environment Configuration:**
+   The project uses Vite environment variables. We have provided `.env.development` and `.env.production` templates. 
+   
+   Ensure that your `.env.development` contains the correct backend URLs:
+   ```env
+   VITE_API_URL=http://localhost:8000
+   VITE_SOCKET_URL=http://localhost:8000
+   VITE_GOOGLE_CLIENT_ID=your-google-client-id
+   ```
 
-## Expanding the ESLint configuration
+3. **Start the Development Server:**
+   ```bash
+   npm run dev
+   ```
+   The app will typically run on `http://localhost:5173`.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Production Deployment
+To build the application for production:
+```bash
+npm run build
 ```
+This will generate a `dist` folder. You can deploy this directory to any static hosting service like Vercel, Netlify, or Cloudflare Pages. 
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Make sure your production environment variables are properly set in your hosting platform dashboard so the frontend can securely connect to your deployed backend.
