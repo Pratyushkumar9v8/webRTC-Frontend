@@ -25,10 +25,21 @@ export function HistoryPage() {
         const response = await fetch(`${API_URL}/api/v1/users/get_all_activity`, {
           credentials: "include",
         });
+        if (response.status === 401) {
+          localStorage.removeItem("nexus.auth.user");
+          navigate("/");
+          return;
+        }
         if (!response.ok) {
           throw new Error("Failed to fetch meeting history");
         }
         const data = await response.json();
+        
+        if (!Array.isArray(data)) {
+           setHistory([]);
+           return;
+        }
+
         const formatted: CallRecord[] = data.map((item: any) => {
           const dateObj = new Date(item.created_at);
           
@@ -48,7 +59,7 @@ export function HistoryPage() {
           const timeStr = dateObj.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
           
           return {
-            id: item.id.toString(),
+            id: item.id?.toString() || Math.random().toString(),
             name: `Meeting: ${item.meeting_code}`,
             date: dateStr,
             time: timeStr,
@@ -56,7 +67,8 @@ export function HistoryPage() {
         });
         setHistory(formatted);
       } catch (err: any) {
-        setError(err.message);
+        console.error("Error fetching history:", err);
+        setHistory([]);
       } finally {
         setLoading(false);
       }

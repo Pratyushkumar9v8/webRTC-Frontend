@@ -105,7 +105,7 @@ export function HomePage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center p-4 sm:p-6 lg:p-8 max-w-[1000px] mx-auto">
+    <div className="w-full flex-1 flex flex-col justify-start md:justify-center p-4 pt-8 sm:p-6 lg:p-8 max-w-[1000px] mx-auto min-h-screen md:min-h-0">
       {/* Greeting */}
       <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
